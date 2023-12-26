@@ -1,0 +1,5 @@
+node_modules/
+.env
+tailwind.config.js
+tailwind-default.config.js
+src/
