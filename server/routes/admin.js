@@ -1,10 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const Post = require("../models/Post");
-const User = require("../models/User");
+const Admin = require("../models/Admin");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const authMiddleware = require("../../middlewares/authMiddleware");
+const getTags = require("../../middlewares/getTags");
 
 const adminLayout = "../views/layouts/admin";
 const jwtSecret = process.env.JWT_SECRET;
@@ -36,19 +37,19 @@ router.post("/admin", async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    const user = await User.findOne({ username });
+    const admin = await Admin.findOne({ username });
 
-    if (!user) {
+    if (!admin) {
       return res.status(401).json({ message: "Invalid Credientials" });
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcrypt.compare(password, admin.password);
 
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid Credientials" });
     }
 
-    const token = jwt.sign({ userId: user.id }, jwtSecret);
+    const token = jwt.sign({ adminId: admin.id }, jwtSecret);
     res.cookie("token", token, { httpOnly: true });
 
     res.redirect("/dashboard");
@@ -80,7 +81,7 @@ router.get("/dashboard", authMiddleware, async (req, res) => {
  * GET /
  * Admin -- Create new post
  */
-router.get("/add-post", authMiddleware, async (req, res) => {
+router.get("/add-post", authMiddleware,  async (req, res) => {
   try {
     const locals = {
       title: "Admin || Create!",
@@ -104,10 +105,15 @@ router.post('/add-post', authMiddleware, async (req, res) => {
     try {
       const newPost = new Post({
         title: req.body.title,
-        body: req.body.body
+        body: req.body.body,
+        tags: getTags(req.body)
       });
+   
+   
+    
 
       await Post.create(newPost);
+
       res.redirect('/dashboard');
     } catch (error) {
       console.log(error);
