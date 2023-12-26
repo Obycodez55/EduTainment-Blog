@@ -4,7 +4,7 @@ const Post = require("../models/Post");
 const Admin = require("../models/Admin");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const authMiddleware = require("../../middlewares/authMiddleware");
+const checkAuthMiddleware = require("../../middlewares/checkAuthMiddleware");
 const getTags = require("../../middlewares/getTags");
 
 const adminLayout = "../views/layouts/admin";
@@ -22,7 +22,7 @@ router.get("/admin", async (req, res) => {
       description: "Simple Blog created with NodeJs, Express & MongoDb."
     };
 
-    res.render("admin/index", { locals, layout: adminLayout });
+    res.render("admin/index", { locals, layout: adminLayout, invalid: false });
   } catch (error) {
     console.log(error);
   }
@@ -35,27 +35,30 @@ router.get("/admin", async (req, res) => {
 
 router.post("/admin", async (req, res) => {
   try {
+    const locals = {
+      title: "Admin Page",
+      description: "Simple Blog created with NodeJs, Express & MongoDb."
+    };
     const { username, password } = req.body;
 
     const admin = await Admin.findOne({ username });
 
     if (!admin) {
-      return res.status(401).json({ message: "Invalid Credientials" });
+      return res.render("admin/index", { locals, layout: adminLayout, invalid: true });
     }
-
     const isPasswordValid = await bcrypt.compare(password, admin.password);
 
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Invalid Credientials" });
+      return res.render("admin/index", { locals, layout: adminLayout, invalid: true });
     }
 
     const token = jwt.sign({ adminId: admin.id }, jwtSecret);
-    res.cookie("token", token, { httpOnly: true });
-
-    res.redirect("/dashboard");
-  } catch (error) {
-    console.log(error);
-  }
+  res.cookie("token", token, { httpOnly: true });
+  res.redirect("/dashboard");
+} catch(error){
+console.log(error);
+res.redirect("/admin");
+}
 });
 
 /**
@@ -63,7 +66,7 @@ router.post("/admin", async (req, res) => {
  * Admin Dashboard
  */
 
-router.get("/dashboard", authMiddleware, async (req, res) => {
+router.get("/dashboard", checkAuthMiddleware, async (req, res) => {
   try {
     const locals = {
       title: "Admin || Dashboard",
@@ -81,7 +84,7 @@ router.get("/dashboard", authMiddleware, async (req, res) => {
  * GET /
  * Admin -- Create new post
  */
-router.get("/add-post", authMiddleware,  async (req, res) => {
+router.get("/add-post", checkAuthMiddleware,  async (req, res) => {
   try {
     const locals = {
       title: "Admin || Create!",
@@ -100,7 +103,7 @@ router.get("/add-post", authMiddleware,  async (req, res) => {
  * Admin -- Create new post
  */
 
-router.post('/add-post', authMiddleware, async (req, res) => {
+router.post('/add-post', checkAuthMiddleware, async (req, res) => {
   try {
     try {
       const newPost = new Post({
@@ -129,7 +132,7 @@ router.post('/add-post', authMiddleware, async (req, res) => {
  * GET /
  * Admin -- Edit post
  */
-router.get("/edit-post/:id", authMiddleware, async (req, res) => {
+router.get("/edit-post/:id", checkAuthMiddleware, async (req, res) => {
   try {
     let slug = req.params.id;
 
@@ -151,7 +154,7 @@ router.get("/edit-post/:id", authMiddleware, async (req, res) => {
  * Admin -- Edit post
  */
 
-router.put("/edit-post/:id", authMiddleware, async (req, res) => {
+router.put("/edit-post/:id", checkAuthMiddleware, async (req, res) => {
   try {
     let slug = req.params.id;
 
@@ -174,7 +177,7 @@ router.put("/edit-post/:id", authMiddleware, async (req, res) => {
  * Admin -- Delete post
  */
 
-router.delete("/delete-post/:id", authMiddleware, async (req, res) => {
+router.delete("/delete-post/:id", checkAuthMiddleware, async (req, res) => {
   try {
     let slug = req.params.id;
 
