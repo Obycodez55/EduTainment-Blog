@@ -42,8 +42,16 @@ app.set("view engine", "ejs");
 
 app.locals.isActiveRoute = isActiveRoute;
 
+app.get("/", function(req, res) {
+    res.sendFile(path.join(__dirname, "public/index.html"));
+});
+
 app.use("/", require("./server/routes/main"));
-app.use("/", require("./server/routes/admin"));
+app.use("/user", require("./server/routes/user"));
+app.use("/admin", require("./server/routes/admin"));
+app.use("/auth", require("./server/routes/auth"));
+
+
 
 
 app.listen(PORT, ()=>{

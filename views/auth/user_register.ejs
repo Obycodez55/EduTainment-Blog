@@ -1,0 +1,32 @@
+<h3>User -- Register</h3>
+
+<form action="/auth/user/register" method="post" class="flex flex-col w-2/4 mx-auto mt-10">
+
+    <label for="firstname"><b>Firstname</b></label>
+    <input type="text" placeholder="Enter First Name" name="firstname" required />
+  
+    <label for="lastname"><b>Lastname</b></label>
+    <input type="text" placeholder="Enter Last name" name="lastname" required />
+  
+    <label for="email"><b>Email</b></label>
+    <input type="email" placeholder="Enter Email" name="email" required />
+  
+    <label for="username"><b>Username</b></label>
+    <input type="text" placeholder="Enter Username" name="username" required />
+  
+    <label for="password"><b>Password</b></label>
+    <input
+      type="password"
+      placeholder="Enter Password"
+      name="password"
+      required
+    />
+  
+
+<input type="submit" value="Login" class="btn">
+
+<% if (invalid) { %>
+ <p class="text-red-500">Invalid credentials!</p>
+<% } %>
+</form>
+

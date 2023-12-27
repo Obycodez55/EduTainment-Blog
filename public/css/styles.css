@@ -582,6 +582,19 @@ video {
   visibility: visible;
 }
 
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mt-10 {
+  margin-top: 2.5rem;
+}
+
+.flex {
+  display: flex;
+}
+
 .hidden {
   display: none;
 }
@@ -592,6 +605,26 @@ video {
 
 .w-6 {
   width: 1.5rem;
+}
+
+.w-96 {
+  width: 24rem;
+}
+
+.w-2\/4 {
+  width: 50%;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-items-center {
+  justify-items: center;
 }
 
 .text-red-500 {

@@ -4,25 +4,35 @@ const Post = require("../models/Post");
 const Admin = require("../models/Admin");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const checkAuthMiddleware = require("../../middlewares/checkAuthMiddleware");
+const checkAuthMiddleware = require("../../middlewares/adminAuthMiddleware");
 const getTags = require("../../middlewares/getTags");
 
 const adminLayout = "../views/layouts/admin";
+const authLayout = "../views/layouts/auth";
 const jwtSecret = process.env.JWT_SECRET;
+
+/**
+ * GET /
+ * Admin
+ */
+router.get("/", (req, res) => {
+  res.redirect("/admin/login");
+});
+
 
 /**
  * GET /
  * Admin -- Login
  */
 
-router.get("/admin", async (req, res) => {
+router.get("/login", async (req, res) => {
   try {
     const locals = {
       title: "Admin Page",
       description: "Simple Blog created with NodeJs, Express & MongoDb."
     };
 
-    res.render("admin/index", { locals, layout: adminLayout, invalid: false });
+    res.render("auth/admin_login", { locals, layout: authLayout, invalid: false });
   } catch (error) {
     console.log(error);
   }
@@ -33,7 +43,7 @@ router.get("/admin", async (req, res) => {
  * Admin --Check Login
  */
 
-router.post("/admin", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const locals = {
       title: "Admin Page",
@@ -53,13 +63,36 @@ router.post("/admin", async (req, res) => {
     }
 
     const token = jwt.sign({ adminId: admin.id }, jwtSecret);
-  res.cookie("token", token, { httpOnly: true });
-  res.redirect("/dashboard");
+  res.cookie("admin_token", token, { httpOnly: true });
+  res.redirect("admin/dashboard");
 } catch(error){
 console.log(error);
 res.redirect("/admin");
 }
 });
+
+
+
+
+/**
+ * GET /
+ * Admin --Register
+ */
+router.get("/register", (req, res) => {
+  try {
+    const locals = {
+      title: "Admin Page",
+      description: "Simple Blog created with NodeJs, Express & MongoDb."
+    };
+
+    res.render("auth/admin_register", { locals, layout: authLayout, invalid: false });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
+
 
 /**
  * GET /
@@ -117,7 +150,7 @@ router.post('/add-post', checkAuthMiddleware, async (req, res) => {
 
       await Post.create(newPost);
 
-      res.redirect('/dashboard');
+      res.redirect('admin/dashboard');
     } catch (error) {
       console.log(error);
 
@@ -164,7 +197,7 @@ router.put("/edit-post/:id", checkAuthMiddleware, async (req, res) => {
       updatedAt: Date.now()
     });
 
-  res.redirect(`/edit-post/${req.params.id}`);
+  res.redirect(`admin/edit-post/${req.params.id}`);
 
   } catch (error) {
     console.log(error);
@@ -183,55 +216,14 @@ router.delete("/delete-post/:id", checkAuthMiddleware, async (req, res) => {
 
     await Post.findByIdAndDelete(slug);
 
-  res.redirect("/dashboard");
+  res.redirect("admin/dashboard");
 
   } catch (error) {
     console.log(error);
   }
 });
 
-/**
- * GET  /
- * Admin -- Logout
- */
 
-router.get("/logout", (req, res) => {
-  res.clearCookie("token");
-  res.redirect("/");
-});
-
-
-
-
-
-/**
- * POST /
- * Admin --Register
- */
-
-// router.post("/register", async (req, res) => {
-
-//   try {
-
-//     const {username, password} = req.body;
-//     const hashedPassword = await bcrypt.hash(password, 10)
-
-//     try {
-//       const user = await User.create({username, password:hashedPassword});
-//       res.status(201).json({message: "User created successfully", user})
-//       console.log(user);
-//     } catch (error) {
-//       if (error.code === 11000){
-//         res.status(409).json({message: "User Already in use"});
-//       }
-//       res.status(500).json({message: "Internal server error"});
-//     }
-
-//   } catch (error) {
-//     console.log(error);
-//   }
-
-// });
 
 module.exports = router;
 

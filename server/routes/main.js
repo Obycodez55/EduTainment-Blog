@@ -6,7 +6,7 @@ const Post = require("../models/Post");
  * GET /
  * HOME
  */
-router.get("/", async (req, res) => {
+router.get("/home", async (req, res) => {
   try {
     const locals = {
       title: "NodeJs Blog",
@@ -25,7 +25,7 @@ router.get("/", async (req, res) => {
     const nextPage = parseInt(page) + 1;
     const hasNextPage = nextPage <= Math.ceil(count / perPage);
 
-    res.render("index", {
+    res.render("home", {
       locals,
       data,
       current: page,
@@ -116,5 +116,16 @@ router.post("/search", async (req, res) => {
     console.log(error);
   }
 });
+
+/**
+ * GET  /
+ * Admin -- Logout
+ */
+
+router.get("/logout", (req, res) => {
+  res.clearCookie("token");
+  res.redirect("/");
+});
+
 
 module.exports = router;

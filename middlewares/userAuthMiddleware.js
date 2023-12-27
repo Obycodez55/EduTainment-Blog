@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET;
 
 module.exports = function(req, res, next){
-    const token = req.cookies.token;
+    const token = req.cookies.user_token;
   
     if (!token) {
       return res.redirect("/admin");
