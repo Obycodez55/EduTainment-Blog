@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const Post = require("../models/Post");
+const ensureUserAuth = require("../../middlewares/ensureUserAuth");
 
 /**
  * GET /
  * HOME
  */
-router.get("/home", async (req, res) => {
+router.get("/home", ensureUserAuth, async (req, res) => {
   try {
     const locals = {
       title: "NodeJs Blog",
@@ -42,7 +43,7 @@ router.get("/home", async (req, res) => {
  * ABOUT
  */
 
-router.get("/about", (req, res) => {
+router.get("/about", ensureUserAuth, (req, res) => {
   const locals = {
     title: "NodeJs Blog | About",
     description:
@@ -55,7 +56,7 @@ router.get("/about", (req, res) => {
  * GET /
  * CONTACT
  */
-router.get("/contact", (req, res) => {
+router.get("/contact", ensureUserAuth,  (req, res) => {
   const locals = {
     title: "NodeJs Blog | Contact",
     description:
@@ -71,7 +72,7 @@ router.get("/contact", (req, res) => {
  * GET /
  * Post : ID
  */
-router.get("/post/:id", async (req, res) => {
+router.get("/post/:id", ensureUserAuth,  async (req, res) => {
   try {
     let slug = req.params.id;
 
@@ -94,7 +95,7 @@ router.get("/post/:id", async (req, res) => {
  * Post : Search term
  */
 
-router.post("/search", async (req, res) => {
+router.post("/search", ensureUserAuth, async (req, res) => {
   try {
     const locals = {
       title: "NodeJs Blog",
@@ -106,8 +107,11 @@ router.post("/search", async (req, res) => {
 
     const data = await Post.find({
       $or: [
+        {tags: {$regex: new RegExp(searchNoSpecialChar, "i")}},
         { title: {$regex: new RegExp(searchNoSpecialChar, "i")}},
-        { body: {$regex: new RegExp(searchNoSpecialChar, "i")}}
+        { body: {$regex: new RegExp(searchNoSpecialChar, "i")}},
+        {description: {$regex: new RegExp(searchNoSpecialChar, "i")}},
+        {image: {$regex: new RegExp(searchNoSpecialChar, "i")}}
       ]
     })
     res.render("search", {data, locals });
@@ -117,15 +121,7 @@ router.post("/search", async (req, res) => {
   }
 });
 
-/**
- * GET  /
- * Admin -- Logout
- */
 
-router.get("/logout", (req, res) => {
-  res.clearCookie("token");
-  res.redirect("/");
-});
 
 
 module.exports = router;

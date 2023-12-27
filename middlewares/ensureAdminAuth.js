@@ -6,11 +6,7 @@ module.exports = function(req, res, next){
     const token = req.cookies.admin_token;
   
     if (!token) {
-      const locals = {
-        title: "Admin Page",
-        description: "Simple Blog created with NodeJs, Express & MongoDb."
-      };
-      return res.render("auth/admin_login", { locals, layout: authLayout, invalid: false });
+      return res.redirect("/admin/login");
     }
   
     try {

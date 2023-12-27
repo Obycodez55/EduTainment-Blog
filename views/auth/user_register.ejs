@@ -25,8 +25,8 @@
 
 <input type="submit" value="Login" class="btn">
 
-<% if (invalid) { %>
- <p class="text-red-500">Invalid credentials!</p>
-<% } %>
+<% if (error) { %>
+  <p class="text-red-500"><%= errorMessage %></p>
+ <% } %>
 </form>
 
