@@ -1,19 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <title>Document</title>
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-<body>
-    <h1>Welcome to the world of entertainment</h1>
-    <a href="/user/register">Sign up</a>
-    <a href="/user/login">Log In</a>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Obycodez" />
+    <meta
+      name="tag"
+      content="Blog, Learn with Fun,Science, Arts, Phylosophy, Web Development, Software Engineering, Music, Religion, Creativity, Nature, History, Travel"
+    />
+    <meta
+      name="description"
+      content="A blog for learning new things about life in various fields in diverse of ways"
+    />
+    <title>Edutainment Blog || The world of Learning with Fun</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body class="bg-light-500 text-secondary-700 font-nunito w-full min-h-full">
+    <header class="header">
+      <div class="flex sm:justify-between pt-4 px-5 sm:flex-row flex-col">
+        <div class="flex gap-3">
+          <span
+            ><a href="/user/login" class="font-black text-xl"><img src="" alt="" />Logo</a></span
+          ><span class="font-merri font-semibold">CurioCraze</span>
+        </div>
+      </div>
+      <div class="grid grid-cols-2">
+        <div
+          class="sm:col-span-1 col-span-full md:pl-20 md:pt-20 sm:pl-10 pt-10"
+        >
+          <h1 class="md:text-5xl text-4xl font-bold font-merri">
+            Welcome to the world of entertainment
+          </h1>
+        </div>
+      </div>
+      <div class="mt-20 text-xl relative font-bold md:pl-20 sm:pl-10">
+        <a href="/user/register"
+          ><span class="user_auth_btn sm:mr-10 mr-3">Sign up</span></a
+        >
+        <a href="/user/login"> <span class="user_auth_btn">Log In</span></a>
+      </div>
+    </header>
 
-    <h1>You could also be a creator on the blog</h1>
-    <a href="/admin/register">Sign Up as a writer</a>
-    <a href="/admin/login   ">Log In as a writer</a>
-</body>
+    <section class="md:p-14 p-4">
+      <div class="text-center mb-10 text-secondary-500">
+        <h2 class="text-4xl font-bold">
+          Experience Education and Entertainment Like never before
+        </h2>
+      </div>
+      <div class="grid lg:grid-cols-3 sm:grid-cols-2 gap-y-5 gap-x-4">
+        <div class="tag">
+          <h3>Science</h3>
+          <p>Where Curiosity Meets Discovery</p>
+          <img src="img/App_images/experiment.jpg" alt="Science Experiments" />
+        </div>
+        <div class="tag">
+          <h3>Arts</h3>
+          <p>Where Imagination Takes Center Stage</p>
+          <img src="img/App_images/art_room.jpg" alt="" />
+        </div>
+        <div class="tag">
+          <h3>Phylosophy</h3>
+          <p>Navigating the Depths of Wisdom</p>
+          <img
+            src="img/App_images/phylosophy_library.jpg"
+            alt="A library with phlosopher images"
+          />
+        </div>
+        <div class="tag">
+          <h3>Software Engineeering</h3>
+          <p>Building Tomorrow's World, One Line at a Time</p>
+          <img src="img/App_images/code_screen.jpg" alt="" />
+        </div>
+        <div class="tag">
+          <h3>History</h3>
+          <p>Discover the Tapestry of Our Shared Past</p>
+          <img src="img/App_images/egypt_pyramids.jpg" alt="" />
+        </div>
+        <div class="tag">
+          <h3>Comics</h3>
+          <p>Unleashing Heroes and Stories Beyond Panels</p>
+          <img src="img/App_images/spider_ironman.jpg" alt="" />
+        </div>
+        <div class="tag">
+          <h3>Astronomy</h3>
+          <p>Illuminate the Wonders Beyond Our Horizon</p>
+          <img src="img/App_images/solar_system.jpg" alt="Solar system" />
+        </div>
+        <div class="tag h-20 pt-5 pl-3">And So much more...</div>
+      </div>
+    </section>
+
+    <section class="pt-10">
+      <div class="text-center mb-10 text-secondary-500">
+        <h1 class="text-4xl font-bold">Are you a Content Creator?</h1>
+      </div>
+      <div class="grid md:grid-cols-2 text-lg">
+        <div class="p-10 bg-light-600">
+          <div class="mb-10">
+            <p>Log in to your dashboard</p>
+            <p>Create, Edit, Delete and Manage your posts</p>
+          </div>
+
+          <a href="/admin/login"
+            ><span class="admin_auth_btn">Log In as a Creator</span></a
+          >
+        </div>
+        <div class="bg-secondary-100 p-10">
+          <p class="mb-10">
+            Join the community of Content Creators on CurioCraze and make your
+            dreams come true
+          </p>
+          <a href="/admin/register"
+            ><span class="admin_auth_btn">Join the Community</span></a
+          >
+        </div>
+      </div>
+    </section>
+
+    <footer
+      class="bg-secondary-500 text-light-500 md:p-32 text-center sm:p-20 px-6 py-16"
+    >
+      &copy; <span id="year"></span> Obycodez • Built with NodeJs and MongoDB
+    </footer>
+
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script type="text/javascript" defer src="/js/script.js"></script>
+  </body>
 </html>

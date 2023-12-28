@@ -1,39 +1,69 @@
-<div class="author">
-  <h1 class="author__heading">Hi, I'm Adebayo</h1>
-  <p class="author__body">Web Developer and Content Creator.</p>
-</div>
+<section>
+  <div>
+    <h1>CurioCraze</h1>
+    <p>
+      A world of <span>Education</span> mixed with <span>Entertainment</span>
+    </p>
+  </div>
 
-<img
-  src="img/hero-image.webp"
-  alt="man looking out the window"
-  class="hero-image"
-  width="981"
-  height="528"
-/>
+  <div>
+    Take a deep breath and get to reading with all of your favourite sections -
+    <ul>
+      <li><a href="">Science</a></li>
+      <li><a href="">Technology</a></li>
+      <li><a href="">Phylosophy</a></li>
+      <li><a href="">Music</a></li>
+      <li><a href="">Arts</a></li>
+      <li><a href="">Engineering</a></li>
+      <li><a href="">Nature</a></li>
+      <li>And so much more...</li>
+    </ul>
+  </div>
+</section>
 
-<section class="articles">
-  <h2 class="articles__heading">Latest Posts</h2>
+<section>
+  <div>
+    <h1>Latest Posts</h1>
+  </div>
 
-  <ul class="article-ul">
+  <ul>
+    <li>
+      <a href="">
+        <h4>Post Title</h4>
+        <p>Post Description</p>
+        <img src="" alt="">
+        <ul>
+          <li><a href="">Science</a></li>
+          <li><a href="">Technology</a></li>
+          <li><a href="">Phylosophy</a></li>
+          <li><a href="">Music</a></li>
+          <li><a href="">Arts</a></li>
+        </ul>
+        <span>Date</span>
+      </a>
+    </li>
+  </ul>
+</section>
 
+<!-- <section>
+  <h2>Latest Posts</h2>
 
+  <ul>
     <% data.forEach(post => { %>
-
 
     <li>
       <a href="/post/<%= post._id %>">
         <span><%= post.title %></span>
-        <span class="article-list__date"><%= post.createdAt.toDateString() %></span>
+        <span class="article-list__date"
+          ><%= post.createdAt.toDateString() %></span
+        >
       </a>
     </li>
-
 
     <% }) %>
   </ul>
 
-
   <% if (nextPage !== null) { %>
-    <a href="/?page=<%= nextPage %>" class="pagination">&lt; View Older Posts</a>
+  <a href="/?page=<%= nextPage %>">&lt; View Older Posts</a>
   <% } %>
- 
-</section>
+</section> -->

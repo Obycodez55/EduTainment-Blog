@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const userAuthMiddleware = require("../../middlewares/userAuthMiddleware");
-const cookieParser = require("cookie-parser");
-
 const authLayout = "../views/layouts/auth";
 
 

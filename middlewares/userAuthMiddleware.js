@@ -7,8 +7,8 @@ module.exports = function(req, res, next){
   
     if (!token) {
       const locals = {
-        title: "Admin Page",
-        description: "Simple Blog created with NodeJs, Express & MongoDb."
+        title: "Login || CurioCraze",
+        description: "Login Authentication for users | CurioCraze"
       };
       return res.render("auth/user_login", { locals, layout: authLayout, invalid: false });
     }

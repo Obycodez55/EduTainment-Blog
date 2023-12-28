@@ -23,6 +23,9 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
+  Interests: {
+    type: Array
+  },
   joinedAt: {
     type: Date,
     default: Date.now()
