@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Post = require("../models/Post");
+const User = require("../models/User");
 const ensureUserAuth = require("../../middlewares/ensureUserAuth");
 
 /**
@@ -10,14 +11,17 @@ const ensureUserAuth = require("../../middlewares/ensureUserAuth");
 router.get("/home", ensureUserAuth, async (req, res) => {
   try {
     const locals = {
-      title: "NodeJs Blog",
-      description: "Simple Blog made with NodeJs, Express, EJS and MongoDB"
+      title: "Home  || CurioCraze",
+      description: "Homepage of the CurioCraze Blog Website -- Welcome"
     };
 
     let perPage = 10;
     let page = req.query.page || 1;
 
-    const data = await Post.aggregate([{ $sort: { createdAt: -1 } }])
+    const userId = req.userId;
+    const user = await User.findById({_id: userId});
+    
+    const post = await Post.aggregate([{ $sort: { createdAt: -1 } }])
       .skip(perPage * page - perPage)
       .limit(perPage)
       .exec();
@@ -28,7 +32,8 @@ router.get("/home", ensureUserAuth, async (req, res) => {
 
     res.render("home", {
       locals,
-      data,
+      post,
+      user,
       current: page,
       nextPage: hasNextPage ? nextPage : null,
       currentRoute: "/"
@@ -95,14 +100,14 @@ router.get("/post/:id", ensureUserAuth,  async (req, res) => {
  * Post : Search term
  */
 
-router.post("/search", ensureUserAuth, async (req, res) => {
+router.get("/search/:searchTerm", ensureUserAuth, async (req, res) => {
   try {
     const locals = {
       title: "NodeJs Blog",
       description: "Simple Blog made with NodeJs, Express, EJS and MongoDB"
     };
 
-    let searchTerm = req.body.searchTerm;
+    let searchTerm = req.params.searchTerm;
     const searchNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
 
     const data = await Post.find({
@@ -114,14 +119,11 @@ router.post("/search", ensureUserAuth, async (req, res) => {
         {image: {$regex: new RegExp(searchNoSpecialChar, "i")}}
       ]
     })
-    res.render("search", {data, locals });
+    res.render("search", {data, locals, searchTerm ,currentRoute: `/post/${searchTerm}` });
 
   } catch (error) {
     console.log(error);
   }
 });
-
-
-
 
 module.exports = router;

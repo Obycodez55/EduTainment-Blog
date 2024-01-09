@@ -1,42 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Obycodez">
-    <meta name="tags" content="Blog, Learn with Fun,Science, Arts, Phylosophy, Web Development, Software Engineering, Music, Religion, Creativity">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Obycodez" />
+    <meta
+      name="tags"
+      content="Blog, Learn with Fun,Science, Arts, Phylosophy, Web Development, Software Engineering, Music, Religion, Creativity"
+    />
     <title><%= locals.title %></title>
-    <meta name = "description" content="<%= locals.description %>">
+    <meta name="description" content="<%= locals.description %>" />
 
     <!-- Font Awesome Icons -->
-    <script src="https://kit.fontawesome.com/f3dceb1f0b.js" crossorigin="anonymous"></script>
+    <script
+      src="https://kit.fontawesome.com/f3dceb1f0b.js"
+      crossorigin="anonymous"
+    ></script>
 
-    
     <!-- CSS Stylesheet -->
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css" />
 
     <!-- Favicon Image -->
-    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
-    
-</head>
-<body>
-    <%- include('../partials/search.ejs') %>
-    <div class="container">
-        <%- include('../partials/header.ejs') %>
-        <main class="main">
-
-        <%- body %>
-
-        </main>
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
+  </head>
+  <body>
+    <div class="grid md:grid-cols-5">
+      <%- include('../partials/header.ejs') %>
+      <div class="md:col-span-4">
+        <main><%- body %></main>
 
         <%- include('../partials/footer.ejs') %>
+      </div>
     </div>
     <script
-    src="https://code.jquery.com/jquery-3.7.1.min.js"
-    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-    crossorigin="anonymous"
-  ></script>
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script type="text/javascript" defer src="/js/script.js"></script>
-</body>
+  </body>
 </html>

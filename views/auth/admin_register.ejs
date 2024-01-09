@@ -1,34 +1,54 @@
-<h3>Admin -- Register</h3>
+<div class="lg:m-20 md:m-10 shadow-lg bg-light-400">
+  <div class="pt-16 px-5 items-center pb-10">
+    <h1 class="text-center sm:text-3xl text-2xl font-bold">Become a True Content Creator!</h1>
+    <h1 class="text-center sm:text-3xl text-2xl font-bold p-6">Sign Up</h1>
+    <div class="text-center font-black text-2xl"><img src="" alt="" />Logo</div>
 
-<form action="/auth/admin/register" method="post" class="flex flex-col w-2/4 mx-auto mt-10">
+    <form
+      action="/auth/admin/register"
+      method="post"
+      class="flex flex-col md:w-2/4 mx-auto mt-10"
+    >
+      <label for="firstname"><b>Firstname</b></label>
+      <input
+        type="text"
+        placeholder="Enter First Name"
+        name="firstname"
+        required
+      />
 
-    <label for="firstname"><b>Firstname</b></label>
-    <input type="text" placeholder="Enter First Name" name="firstname" required />
-  
-    <label for="lastname"><b>Lastname</b></label>
-    <input type="text" placeholder="Enter Last name" name="lastname" required />
-  
-    <label for="email"><b>Email</b></label>
-    <input type="email" placeholder="Enter Email" name="email" required />
-  
-    <label for="username"><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="username" required />
-  
-    <label for="password"><b>Password</b></label>
-    <input
-      type="password"
-      placeholder="Enter Password"
-      name="password"
-      required
-    />
-  
+      <label for="lastname"><b>Lastname</b></label>
+      <input
+        type="text"
+        placeholder="Enter Last name"
+        name="lastname"
+        required
+      />
 
-<input type="submit" value="Register" class="btn">
+      <label for="email"><b>Email</b></label>
+      <input type="email" placeholder="Enter Email" name="email" required />
 
-<% if (error) { %>
-    <p class="text-red-500"><%= errorMessage %></p>
-   <% } %>
-</form>
+      <label for="username"><b>Username</b></label>
+      <input
+        type="text"
+        placeholder="Enter Username"
+        name="username"
+        required
+      />
 
+      <label for="password"><b>Password</b></label>
+      <input
+        type="password"
+        placeholder="Enter Password"
+        name="password"
+        required
+      />
 
+      <div class="text-center"><input type="submit" value="Sign Up" /></div>
 
+      <% if (error) { %>
+      <p class="text-red-500"><%= errorMessage %></p>
+      <% } %>
+    </form>
+  </div>
+</div>

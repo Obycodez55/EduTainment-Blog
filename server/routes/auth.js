@@ -15,8 +15,8 @@ const jwtSecret = process.env.JWT_SECRET;
 router.post("/admin/login", async (req, res) => {
   try {
     const locals = {
-      title: "Admin Page",
-      description: "Simple Blog created with NodeJs, Express & MongoDb."
+      title: "Creator -- Login || CurioCraze",
+      description: "Login Authentication for Creators | CurioCraze"
     };
     const { username, password } = req.body;
 
@@ -87,16 +87,15 @@ router.post("/admin/register", async (req, res) => {
           error: true,
           errorMessage: "Account already exists"
         });
-      } else{
+      } else {
         res.status(500);
-      res.render("auth/admin_register", {
-        locals,
-        layout: authLayout,
-        error: true,
-        errorMessage: "Internal server error, Try again!"
-      });
+        res.render("auth/admin_register", {
+          locals,
+          layout: authLayout,
+          error: true,
+          errorMessage: "Internal server error, Try again!"
+        });
       }
-      
     }
   } catch (error) {
     console.log(error);
@@ -112,8 +111,8 @@ router.post("/admin/register", async (req, res) => {
 router.post("/user/login", async (req, res) => {
   try {
     const locals = {
-      title: "Admin Page",
-      description: "Simple Blog created with NodeJs, Express & MongoDb."
+      title: "Login || CurioCraze",
+      description: "Login Authentication for users | CurioCraze"
     };
     const { username, password } = req.body;
 
@@ -150,57 +149,56 @@ router.post("/user/login", async (req, res) => {
  * User -- Register
  */
 router.post("/user/register", async (req, res) => {
-
+  try {
+    const { firstname, lastname, email, username, password } = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
     try {
-        const { firstname, lastname, email, username, password } = req.body;
-        const hashedPassword = await bcrypt.hash(password, 10);
-        try {
-          const user = {
-            firstname: firstname,
-            lastname: lastname,
-            email: email,
-            username: username,
-            password: hashedPassword
-          };
-          await User.create(user);
-          const token = jwt.sign({ userId: user.id }, jwtSecret);
-          res.cookie("user_token", token, { httpOnly: true });
-          res.redirect("/home");
-        } catch (error) {
-          const locals = {
-            title: "Admin Page",
-            description: "Simple Blog created with NodeJs, Express & MongoDb."
-          };
-    
-          //         res.status(409).json({message: "User Already in use"});
-          //       }
-          //       res.status(500).json({message: "Internal server error"});
-          //     }
-    
-          if (error.code === 11000) {
-            res.status(409);
-            res.render("auth/user_register", {
-              locals,
-              layout: authLayout,
-              error: true,
-              errorMessage: "Account already exists"
-            });
-          } else{
-            res.status(500);
-          res.render("auth/user_register", {
-            locals,
-            layout: authLayout,
-            error: true,
-            errorMessage: "Internal server error, Try again!"
-          });
-          }
-          
-        }
-      } catch (error) {
-        console.log(error);
-        res.redirect("/user/register");
+      const newUser = {
+        firstname: firstname,
+        lastname: lastname,
+        email: email,
+        username: username,
+        password: hashedPassword
+      };
+      await User.create(newUser);
+      const user = await User.findOne({ username });
+      const token = jwt.sign({ userId: user.id }, jwtSecret);
+      res.cookie("user_token", token, { httpOnly: true });
+      res.redirect("/home");
+    } catch (error) {
+      const locals = {
+        title: "Admin Page",
+        description: "Simple Blog created with NodeJs, Express & MongoDb."
+      };
+
+      //         res.status(409).json({message: "User Already in use"});
+      //       }
+      //       res.status(500).json({message: "Internal server error"});
+      //     }
+
+      if (error.code === 11000) {
+        res.status(409);
+        res.render("auth/user_register", {
+          locals,
+          layout: authLayout,
+          error: true,
+          errorMessage: "Account already exists"
+        });
+      } else {
+        res.status(500);
+        res.render("auth/user_register", {
+          locals,
+          layout: authLayout,
+          error: true,
+          errorMessage: "Internal server error, Try again!"
+        });
       }
-    });
+    }
+  } catch (error) {
+    console.log(error);
+    res.redirect("/user/register");
+  }
+});
 
 module.exports = router;
 

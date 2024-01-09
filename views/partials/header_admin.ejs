@@ -1,22 +1,40 @@
 <header class="header">
-    <a href="/" class="header__logo">Admin Panel</a>
-  
-    <nav class="header__nav">
-      <ul>
-        <li>
-          <a href="/" class="">Home</a>
-        </li>
-        <li>
-          <a href="/about" class="">About</a>
-        </li>
-        <li>
-          <a href="/contact" class="">Contact</a>
-        </li>
-      </ul>
-    </nav>
-  
-    <div class="header__button">
-      <a href="/admin/logout"><b>Logout</b></a>
+  <div class="header_image">
+    <a href="/">CurioCraze</a>
+  </div>
+  <div class="header_icon_container">
+    <div class="header_icon" id="burger">
+      <svg
+        class="w-6"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+        />
+      </svg>
     </div>
-  </header>
-  
+  </div>
+
+  <nav class="nav">
+    <ul class="max-md:hidden" id="menu">
+      <li class="<%= isActiveRoute('/admn/dashboard', currentRoute) %>">
+        <a href="/admin/dashboard" class="nav__link">Dashboard</a>
+      </li>
+      <li class="<%= isActiveRoute('/admn/creators', currentRoute) %>">
+        <a href="/admin/creators" class="nav__link">Creators</a>
+      </li>
+      <li class="<%= isActiveRoute('/admn/users', currentRoute) %>">
+        <a href="/admin/users" class="nav__link">Users</a>
+      </li>
+      <li>
+        <a href="/admin/logout" class="nav__link">Logout</a>
+      </li>
+    </ul>
+  </nav>
+</header>

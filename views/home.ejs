@@ -1,46 +1,50 @@
-<section>
-  <div>
-    <h1>CurioCraze</h1>
-    <p>
-      A world of <span>Education</span> mixed with <span>Entertainment</span>
-    </p>
-  </div>
-
-  <div>
-    Take a deep breath and get to reading with all of your favourite sections -
-    <ul>
-      <li><a href="">Science</a></li>
-      <li><a href="">Technology</a></li>
-      <li><a href="">Phylosophy</a></li>
-      <li><a href="">Music</a></li>
-      <li><a href="">Arts</a></li>
-      <li><a href="">Engineering</a></li>
-      <li><a href="">Nature</a></li>
-      <li>And so much more...</li>
-    </ul>
+<section class="main_head">
+  <%- include('partials/search_bar.ejs') %>
+  <div class="grid lg:grid-cols-2">
+    <div class="my-10">
+      <h1 class="text-6xl font-bold mb-5">CurioCraze</h1>
+      <div class="text-3xl font-semibold">
+        A world of <span>Education</span> mixed with <span>Entertainment</span>
+      </div>
+    </div>
+    <div class=""></div>
+    <div class="text-xl font-semibold">
+      Take a deep breath <span><%= user.firstname %></span> and get to reading
+      with all of your favourite sections
+    </div>
   </div>
 </section>
 
-<section>
+<section class="py-10 sm:px-10 px-3">
   <div>
-    <h1>Latest Posts</h1>
+    <h1 class="text-4xl text-center font-semibold">Latest Posts</h1>
   </div>
 
-  <ul>
-    <li>
+  <ul class="posts_container">
+     <li class="post">
       <a href="">
-        <h4>Post Title</h4>
-        <p>Post Description</p>
-        <img src="" alt="">
-        <ul>
-          <li><a href="">Science</a></li>
-          <li><a href="">Technology</a></li>
-          <li><a href="">Phylosophy</a></li>
-          <li><a href="">Music</a></li>
-          <li><a href="">Arts</a></li>
-        </ul>
-        <span>Date</span>
+        <div class="relative">
+          <img src="img/App_images/open_nature.jpg" alt="People in an ofice" class="post_image"/>
+          <div class="post_description_container">
+            <div class="post_description">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima
+              asperiores commodi. rkekk/n/wnnxrxnhrjhxmhrxLorem ipsum dolor si
+          </div>
+          </div>
+        </div>
       </a>
+      <div class="px-2 pb-2">
+      <a href=""><h4 class="text-xl font-merri font-bold">Seven reasons why you should not eat sugar in the morning, the effects</h4></a>
+      <div class="flex gap-4 my-2">
+        <span><a class="post_tag" href="">Science</a></span>
+        <span><a class="post_tag" href="">Nutrition</a></span>
+        <span><a class="post_tag" href="">Health</a></span>
+        <span><a class="post_tag" href="">Engineering</a></span>
+      </div>
+      
+      <span class="font-semibold">21 December, 2022</span>
+      <a href=""><span class="read-more">Read More >></span></a>
+    </div>
     </li>
   </ul>
 </section>
@@ -49,7 +53,7 @@
   <h2>Latest Posts</h2>
 
   <ul>
-    <% data.forEach(post => { %>
+    <% post.forEach(post => { %>
 
     <li>
       <a href="/post/<%= post._id %>">

@@ -35,8 +35,8 @@ router.get("/login", userAuthMiddleware , async (req, res) => {
 router.get("/register", async (req, res) => {
     try {
       const locals = {
-        title: "Admin Page",
-        description: "Simple Blog created with NodeJs, Express & MongoDb."
+        title: "Register || CurioCraze Edutainment Blog",
+        description: "Register -- Authentication page for new members of CurioCraze"
       };
   
       res.render("auth/user_register", { locals, layout: authLayout, error: false });

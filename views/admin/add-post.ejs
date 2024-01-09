@@ -1,37 +1,96 @@
-<a href="/admin/dashboard">&larr; Back</a>
-
-<div class="admin-title">
+<div class="text-3xl font-semibold text-center pt-10">
     <h2>Add New Post</h2>
 </div>
 
-<form action="/admin/add-post" method="post">
+<div class="p-10">
+<form action="/admin/add-post" method="post"  class="flex flex-col">
 
 <label for="title"><b>Title</b></label>
-<input type="text" placeholder="Post Title" name="title">
+<input type="text" placeholder="Post Title" id="title" name="title" maxlength="70" required>
+<span class="word-count"><span id="title-count">0</span> / 70</span>
 
 <label for="description"><b>Description</b></label>
-<textarea name="description" cols="40" rows="5"></textarea>
+<input name="description" id="description" maxlength="140" required>
+<span class="word-count"><span id="desc-count">0</span> / 140</span>
 
 <label for="body"><b>Content</b></label>
-<textarea name="body" cols="50" rows="10"></textarea>
+<textarea name="body" id="body" required></textarea>
+<span class="word-count">No of Words: <span id="body-count">0</span></span>
 
-<label for="image">Choose the Post - Thumbnail</label>
-<input type="file" name="image" id="" accept="image/*">
+<input type="file" name="thumbnail" id="thumbnail" accept="image/*" required class="hidden">
+<div class="flex items-center"><label for="thumbnail" id="thumbnail-label">
+    <span class="material-icons">
+        add_photo_alternate
+        </span>
+        Choose Thumbnail</label>
+        <span class="ml-8 text-danger-500 text-sm">required</span>
+        </div>
 
-<label for="science">Science</label>
-<input type="checkbox" name="science" id="">
+<div class="my-5">
+    <h2 class="text-lg font-monts font-semibold underline ml-4">Choose the categories for your post?</h2>
+<label class="tag__label" for="science">Science</label>
+<input type="checkbox" name="science" id="science">
 
-<label for="phylosophy">Phylosophy</label>
-<input type="checkbox" name="phylosophy" id="">
+<label class="tag__label" for="technology">Technology</label>
+<input type="checkbox" name="technology" id="technology">
 
-<label for="comedy">Comedy</label>
-<input type="checkbox" name="comedy" id="">
+<label class="tag__label" for="phylosophy">Phylosophy</label>
+<input type="checkbox" name="phylosophy" id="phylosophy">
 
-<label for="arts">Arts</label>
-<input type="checkbox" name="arts" id="">
+<label class="tag__label" for="music">Music</label>
+<input type="checkbox" name="music" id="music">
 
-<label for="radio"> Testing this</label>
-<input type="radio" name="radio" id="">
+<label class="tag__label" for="arts">Arts</label>
+<input type="checkbox" name="arts" id="arts">
 
-<input type="submit" value="Add" class="btn">
+<label class="tag__label" for="engineering">Engineering</label>
+<input type="checkbox" name="engineering" id="engineering">
+
+<label class="tag__label" for="nature">Nature</label>
+<input type="checkbox" name="nature" id="nature">
+
+<label class="tag__label" for="software">Software</label>
+<input type="checkbox" name="software" id="software">
+
+<label class="tag__label" for="education">Education</label>
+<input type="checkbox" name="education" id="education">
+
+<label class="tag__label" for="food">Food</label>
+<input type="checkbox" name="food" id="food">
+
+<label class="tag__label" for="entertainment">Entertainment</label>
+<input type="checkbox" name="entertainment" id="entertainment">
+
+<label class="tag__label" for="health">Health</label>
+<input type="checkbox" name="health" id="health">
+
+<label class="tag__label" for="sport">Sport</label>
+<input type="checkbox" name="sport" id="sport">
+
+<label class="tag__label" for="fashion">Fashion</label>
+<input type="checkbox" name="fashion" id="fashion">
+
+<label class="tag__label" for="finance">Finance</label>
+<input type="checkbox" name="finance" id="finance">
+
+<label class="tag__label" for="history">History</label>
+<input type="checkbox" name="history" id="history">
+
+<label class="tag__label" for="comics">Comics</label>
+<input type="checkbox" name="comics" id="comics">
+
+<label class="tag__label" for="astronomy">Astronomy</label>
+<input type="checkbox" name="astronomy" id="astronomy">
+
+<label class="tag__label" for="nutrition">Nutrition</label>
+<input type="checkbox" name="nutrition" id="nutrition">
+
+<label class="tag__label" for="comedy">Comedy</label>
+<input type="checkbox" name="comedy" id="comedy">
+
+</div>
+
+<input type="submit" value="Create Post" class="btn">
 </form>
+</div>
+

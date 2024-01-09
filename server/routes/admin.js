@@ -2,15 +2,13 @@ const express = require("express");
 const router = express.Router();
 const Post = require("../models/Post");
 const Admin = require("../models/Admin");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+const User = require("../models/User");
 const adminAuthMiddleware = require("../../middlewares/adminAuthMiddleware");
 const ensureAdminAuth = require("../../middlewares/ensureAdminAuth");
 const getTags = require("../../middlewares/getTags");
 
 const adminLayout = "../views/layouts/admin";
 const authLayout = "../views/layouts/auth";
-const jwtSecret = process.env.JWT_SECRET;
 
 /**
  * GET /
@@ -64,15 +62,55 @@ router.get("/register", (req, res) => {
 router.get("/dashboard", ensureAdminAuth, async (req, res) => {
   try {
     const locals = {
-      title: "Admin || Dashboard",
-      description: "Simple Blog created with NodeJs, Express & MongoDb."
+      title: "Creator || Dashboard",
+      description: "Admin Dashboard to manage posts and users."
     };
     const data = await Post.find();
-    res.render("admin/dashboard", { locals, data, layout: adminLayout });
+    res.render("admin/dashboard", { locals, data, currentRoute: "/admin/dashboard", layout: adminLayout });
   } catch (error) {
     console.log(error);
   }
 });
+
+
+/**
+ * GET /
+ * Admin -- Creators
+ */
+
+router.get("/creators", ensureAdminAuth, async (req, res) => {
+  try {
+    const locals = {
+      title: "Admin || Creators",
+      description: "Check up on fellow Creators and their work"
+    };
+    const data = await Admin.find();
+    res.render("admin/creators", { locals, data, currentRoute: "/admin/creators", layout: adminLayout });
+  } catch (error) {
+    console.log(error);
+  }
+
+});
+
+/**
+ * GET /
+ * Admin -- Users
+ */
+
+router.get("/users", ensureAdminAuth, async (req, res) => {
+  try {
+    const locals = {
+      title: "Admin || Users",
+      description: "View and Manage Users"
+    };
+    const data = await User.find();
+    res.render("admin/users", { locals, data, currentRoute: "/admin/users", layout: adminLayout });
+  } catch (error) {
+    console.log(error);
+  }
+
+});
+
 
 /**
  * GET /
@@ -86,7 +124,7 @@ router.get("/add-post", ensureAdminAuth,  async (req, res) => {
     };
 
     const data = await Post.find();
-    res.render("admin/add-post", { locals, data, layout: adminLayout });
+    res.render("admin/add-post", { locals, data, currentRoute: "/admin/dashboard", layout: adminLayout });
   } catch (error) {
     console.log(error);
   }
@@ -106,12 +144,11 @@ router.post('/add-post', ensureAdminAuth, async (req, res) => {
         tags: getTags(req.body)
       });
    
-   
-    
+  console.log(getTags(req.body));
 
-      await Post.create(newPost);
+      // await Post.create(newPost);
 
-      res.redirect('admin/dashboard');
+      // res.redirect('admin/dashboard');
     } catch (error) {
       console.log(error);
 

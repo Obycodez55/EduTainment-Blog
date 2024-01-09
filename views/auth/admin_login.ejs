@@ -1,25 +1,44 @@
-<h3>Admin -- Sign In</h3>
+<div class="grid md:grid-cols-2 lg:m-20 md:m-10 shadow-lg bg-light-400">
+  <div class="admin_login_image"></div>
+  <div class="pt-24 px-5 items-center pb-5">
+    <h1 class="text-center text-4xl font-bold p-6">Login</h1>
+    <div class="text-center font-black text-2xl"><img src="" alt="" />Logo</div>
 
-<form action="/auth/admin/login" method="post" class="flex flex-col w-2/4 mx-auto mt-10">
+    <form
+      action="/auth/admin/login"
+      method="post"
+      class="flex flex-col mt-10"
+    >
+      <label for="username"><b>Username</b></label>
+      <input
+        type="text"
+        placeholder="Enter Username"
+        name="username"
+        required
+      />
 
-    <label for="username"><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="username" required />
-  
-    <label for="password"><b>Password</b></label>
-    <input
-      type="password"
-      placeholder="Enter Password"
-      name="password"
-      required
-    />
-  
+      <label for="password"><b>Password</b></label>
+      <input
+        type="password"
+        placeholder="Enter Password"
+        name="password"
+        required
+      />
 
-<input type="submit" value="Login" class="btn">
+      <div class="text-center"><input type="submit" value="Login" /></div>
 
-<% if (invalid) { %>
- <p class="text-red-500">Invalid credentials!</p>
-<% } %>
+      <% if (invalid) { %>
+      <p class="text-red-500">Invalid credentials!</p>
+      <% } %>
 
-<p>Don't have an account? <span><a href="/admin/register">register</a></span></p>
-</form>
-
+      <div class="text-center mt-8">
+        Don't have an account?
+        <span
+          ><a href="/admin/register" class="italic underline text-danger-400"
+            >Register</a
+          ></span
+        >
+      </div>
+    </form>
+  </div>
+</div>
