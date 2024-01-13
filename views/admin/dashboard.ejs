@@ -1,36 +1,43 @@
 <div>
-    <h2>Posts</h2>
-    <a href="/admin/add-post"> + Add New</a>
+  <h2>Posts</h2>
+  <a href="/admin/add-post"> + Add New</a>
 </div>
 
+<table class="p-10">
+  <thead>
+    <th>Title</th>
+    <th>Date - Modified</th>
+    <th>Creator</th>
+  </thead>
+  <% data.forEach(post => { %>
 
+  <tr>
+    <td>
+      <a href="/post/<%= post._id %>" class="font-semibold">
+        <%= post.title %></a
+      >
+    </td>
+    <td>
+      <span class="italic"
+        ><%= post.updatedAt.toLocaleDateString('en-us', { weekday:"long",
+        year:"numeric", month:"short", day:"numeric"}) %></span
+      >
+    </td>
+    <td>
+      <% if (post.createdBy === adminName) { %>
+      <span>You</span>
+      <% } else { %>
+      <span><%= post.createdBy %></span>
+      <% } %>
+    </td>
+    <% if (post.createdBy === adminName) { %>
+    <td>
+      <span> <a href="/admin/edit-post/<%= post._id %>">Edit</a> </span>
 
+      <span> <a href="/admin/delete-post/<%= post._id %>"> Delete </a></span>
+    </td>
+    <% } %>
+  </tr>
 
-
-
-
-
-<!-- <ul>
-
-<% data.forEach(post => { %>
- 
-<li>
-
-<a href="/post/<%= post._id %>">
-
-    <%= post.title %> &nearr; 
-
-</a>
-<div class="admin-post-controls">
-    <a href="/admin/edit-post/<%= post._id %>" class="btn">Edit</a>
-
-    <form action="/admin/delete-post/<%= post._id %>?_method=DELETE" method="post">
-    <input type="submit" value="Delete" class="btn">
-    </form>
-</div>
-
-</li>
-
-<% }) %>
-
-</ul> -->
+  <% }) %>
+</table>

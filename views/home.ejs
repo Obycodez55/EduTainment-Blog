@@ -21,53 +21,33 @@
   </div>
 
   <ul class="posts_container">
+    <% post.forEach(post => { %>
      <li class="post">
-      <a href="">
+      <a href="/post/<%= post._id %>">
         <div class="relative">
-          <img src="img/App_images/open_nature.jpg" alt="People in an ofice" class="post_image"/>
+          <img src="img/Post_Thumbnails/<%= post.image_address %>" alt="<%= post.image_address %>" class="post_image"/>
           <div class="post_description_container">
             <div class="post_description">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima
-              asperiores commodi. rkekk/n/wnnxrxnhrjhxmhrxLorem ipsum dolor si
+              <%= post.description %>
           </div>
           </div>
         </div>
       </a>
       <div class="px-2 pb-2">
-      <a href=""><h4 class="text-xl font-merri font-bold">Seven reasons why you should not eat sugar in the morning, the effects</h4></a>
+      <a href="/post/<%= post._id %>"><h4 class="text-xl font-merri font-bold"><%= post.title %></h4></a>
       <div class="flex gap-4 my-2">
-        <span><a class="post_tag" href="">Science</a></span>
-        <span><a class="post_tag" href="">Nutrition</a></span>
-        <span><a class="post_tag" href="">Health</a></span>
-        <span><a class="post_tag" href="">Engineering</a></span>
+        <% post.tags.forEach(tag => { %>
+          <span><a class="post_tag" href="/search/<%= tag %>"><%= tag %></a></span>
+        <% }) %>
       </div>
       
-      <span class="font-semibold">21 December, 2022</span>
-      <a href=""><span class="read-more">Read More >></span></a>
+      <span class="font-semibold"><%= post.createdAt.toLocaleDateString('en-us', { weekday:"long", year:"numeric", month:"short", day:"numeric"}) %></span>
+      <a href="/post/<%= post._id %>"><span class="read-more">Read More >></span></a>
     </div>
     </li>
-  </ul>
-</section>
-
-<!-- <section>
-  <h2>Latest Posts</h2>
-
-  <ul>
-    <% post.forEach(post => { %>
-
-    <li>
-      <a href="/post/<%= post._id %>">
-        <span><%= post.title %></span>
-        <span class="article-list__date"
-          ><%= post.createdAt.toDateString() %></span
-        >
-      </a>
-    </li>
-
     <% }) %>
   </ul>
-
+</section>
   <% if (nextPage !== null) { %>
   <a href="/?page=<%= nextPage %>">&lt; View Older Posts</a>
   <% } %>
-</section> -->

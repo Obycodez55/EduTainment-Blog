@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 const jwtSecret = process.env.JWT_SECRET;
-const authLayout = "../views/layouts/auth";
 
 module.exports = function(req, res, next){
     const token = req.cookies.admin_token;

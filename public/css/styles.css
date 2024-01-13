@@ -942,8 +942,20 @@ label{
   margin-top: 2rem;
 }
 
+.block{
+  display: block;
+}
+
+.inline{
+  display: inline;
+}
+
 .flex{
   display: flex;
+}
+
+.table{
+  display: table;
 }
 
 .grid{
@@ -998,6 +1010,10 @@ label{
   justify-content: center;
 }
 
+.justify-between{
+  justify-content: space-between;
+}
+
 .gap-2{
   gap: 0.5rem;
 }
@@ -1008,6 +1024,10 @@ label{
 
 .gap-4{
   gap: 1rem;
+}
+
+.gap-5{
+  gap: 1.25rem;
 }
 
 .gap-x-4{
@@ -1049,6 +1069,10 @@ label{
 
 .p-6{
   padding: 1.5rem;
+}
+
+.p-3{
+  padding: 0.75rem;
 }
 
 .px-2{
@@ -1776,6 +1800,10 @@ body{
   border-color: rgb(61 66 114 / var(--tw-border-opacity));
   font-size: 0.875rem;
   line-height: 1.25rem;
+}
+
+.post_tag::first-letter{
+  text-transform: uppercase;
 }
 
 .post_tag:hover{

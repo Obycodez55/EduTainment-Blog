@@ -1,8 +1,22 @@
 const express = require("express");
 const router = express.Router();
+
+const multer = require("multer");
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './public/img/Post_Thumbnails');
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "--" + file.originalname);
+  }
+});
+
+const upload = multer({storage})
+
 const Post = require("../models/Post");
 const Admin = require("../models/Admin");
 const User = require("../models/User");
+
 const adminAuthMiddleware = require("../../middlewares/adminAuthMiddleware");
 const ensureAdminAuth = require("../../middlewares/ensureAdminAuth");
 const getTags = require("../../middlewares/getTags");
@@ -65,8 +79,9 @@ router.get("/dashboard", ensureAdminAuth, async (req, res) => {
       title: "Creator || Dashboard",
       description: "Admin Dashboard to manage posts and users."
     };
+    const creator = await Admin.findById({ _id: req.adminId });
     const data = await Post.find();
-    res.render("admin/dashboard", { locals, data, currentRoute: "/admin/dashboard", layout: adminLayout });
+    res.render("admin/dashboard", { locals, data, currentRoute: "/admin/dashboard", adminName:creator.username, layout: adminLayout });
   } catch (error) {
     console.log(error);
   }
@@ -124,7 +139,7 @@ router.get("/add-post", ensureAdminAuth,  async (req, res) => {
     };
 
     const data = await Post.find();
-    res.render("admin/add-post", { locals, data, currentRoute: "/admin/dashboard", layout: adminLayout });
+    res.render("admin/add-post", { locals, data, currentRoute: "/admin/add-post", layout: adminLayout });
   } catch (error) {
     console.log(error);
   }
@@ -135,20 +150,23 @@ router.get("/add-post", ensureAdminAuth,  async (req, res) => {
  * Admin -- Create new post
  */
 
-router.post('/add-post', ensureAdminAuth, async (req, res) => {
+router.post('/add-post', ensureAdminAuth, upload.single('thumbnail'), async (req, res) => {
   try {
+    const creator = await Admin.findById({_id: req.adminId})
     try {
       const newPost = new Post({
         title: req.body.title,
+        description: req.body.description,
+        image_address: req.file.filename,
         body: req.body.body,
-        tags: getTags(req.body)
+        tags: getTags(req.body),
+        createdBy: creator.username
       });
    
-  console.log(getTags(req.body));
 
-      // await Post.create(newPost);
+      await Post.create(newPost);
 
-      // res.redirect('admin/dashboard');
+      res.redirect('/admin/dashboard');
     } catch (error) {
       console.log(error);
 
@@ -208,7 +226,7 @@ router.put("/edit-post/:id", ensureAdminAuth, async (req, res) => {
  * Admin -- Delete post
  */
 
-router.delete("/delete-post/:id", ensureAdminAuth, async (req, res) => {
+router.get("/delete-post/:id", ensureAdminAuth, async (req, res) => {
   try {
     let slug = req.params.id;
 

@@ -57,14 +57,15 @@ router.post("/admin/register", async (req, res) => {
     const { firstname, lastname, email, username, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
     try {
-      const admin = {
+      const creator = {
         firstname: firstname,
         lastname: lastname,
         email: email,
         username: username,
         password: hashedPassword
       };
-      await Admin.create(admin);
+      const admin = await Admin.create(creator);
+      console.log(admin);
       const token = jwt.sign({ adminId: admin.id }, jwtSecret);
       res.cookie("admin_token", token, { httpOnly: true });
       res.redirect("/admin/dashboard");
