@@ -118,7 +118,7 @@ router.get("/search/:searchTerm", ensureUserAuth, async (req, res) => {
         {description: {$regex: new RegExp(searchNoSpecialChar, "i")}},
         {image: {$regex: new RegExp(searchNoSpecialChar, "i")}}
       ]
-    })
+    });
     res.render("search", {data, locals, searchTerm ,currentRoute: `/post/${searchTerm}` });
 
   } catch (error) {

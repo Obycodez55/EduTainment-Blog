@@ -1,22 +1,30 @@
 <div>
-    <h1><%= searchTerm %></h1>
+<%- include('partials/search_bar.ejs') %>
+</div>
+
+<div>
+    <h1 class="first-letter:uppercase"><%= searchTerm %></h1>
 </div>
 
 <section>
-   <ul>
+  <% if (data == []) { %>
+    <ul>
 
 
-    <% data.forEach(post => { %>
-
-
-    <li>
-      <a href="/post/<%= post._id %>">
-        <span><%= post.title %></span>
-        <span><%= post.createdAt.toDateString() %></span>
-      </a>
-    </li>
-
-
-    <% }) %>
-  </ul>
+      <% data.forEach(post => { %>
+  
+  
+      <li>
+        <a href="/post/<%= post._id %>">
+          <span><%= post.title %></span>
+          <span><%= post.createdAt.toDateString() %></span>
+        </a>
+      </li>
+  
+  
+      <% }) %>
+    </ul>
+  <% } else {%>
+    <div>No search results for <%= searchTerm %></div>
+    <% } %>
 </section>

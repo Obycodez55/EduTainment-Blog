@@ -1,20 +1,150 @@
-<a href="/admin/dashboard">&larr; Back</a>
-
-<div class="admin-title">
-    <h2>View / Edit Post</h2>
-
-    <form action="/admin/delete-post/<%= data._id %>?_method=DELETE" method="post">
-        <input type="submit" value="Delete" class="btn">
-        </form>
+<div class="text-3xl font-semibold text-center pt-10">
+  <h2>Edit: <%= data.title %></h2>
 </div>
 
-<form action="/admin/edit-post/<%= data._id %>?_method=PUT" method="post">
+<div>
+  <h2>View / Edit Post</h2>
 
-<label for="title"><b>Title</b></label>
-<input type="text" placeholder="Post Title" name="title" value="<%= data.title %>">
+  <span> <a href="/admin/delete-post/<%= data._id %>"> Delete </a></span>
+</div>
+<!-- Place the first <script> tag in your HTML's <head> -->
+<script
+  src="https://cdn.tiny.cloud/1/y2d0wmv6qroinlod74ns13eh40dwvbje5eqcvaai6igvo50g/tinymce/6/tinymce.min.js"
+  referrerpolicy="origin"
+></script>
 
-<label for="body"><b>Content</b></label>
-<textarea name="body" cols="50" rows="10"><%= data.body %></textarea>
+<!-- Place the following <script> and <textarea> tags your HTML's <body> -->
+<script>
+  tinymce.init({
+    selector: "textarea#body",
+    plugins:
+      "ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
+    toolbar:
+      "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+    tinycomments_mode: "embedded",
+    tinycomments_author: "Author name",
+    mergetags_list: [
+      { value: "First.Name", title: "First Name" },
+      { value: "Email", title: "Email" }
+    ],
+    ai_request: (request, respondWith) =>
+      respondWith.string(() =>
+        Promise.reject("See docs to implement AI Assistant")
+      )
+  });
+</script>
+<div class="md:p-10 p-1">
+  <form
+    action="/admin/edit-post/<%= data._id %>?_method=PUT"
+    method="post"
+    enctype="multipart/form-data"
+    class="flex flex-col"
+  >
+    <label for="title"><b>Title</b></label>
+    <input
+      type="text"
+      placeholder="Post Title"
+      id="title"
+      name="title"
+      maxlength="70"
+      required
+      value="<%= data.title %>"
+    />
+    <span class="word-count"><span id="title-count">0</span> / 70</span>
 
-<input type="submit" value="Update" class="btn">
-</form>
+    <label for="description"><b>Description</b></label>
+    <input
+      name="description"
+      id="description"
+      maxlength="140"
+      required
+      value="<%= data.description %>"
+    />
+    <span class="word-count"><span id="desc-count">0</span> / 140</span>
+
+    <label for="body"><b>Content</b></label>
+    <textarea name="body" id="body" required><%= data.body %></textarea>
+
+    <input
+      type="file"
+      name="thumbnail"
+      id="thumbnail"
+      accept="image/*"
+      class="hidden"
+    />
+    <div class="flex items-center">
+      <label for="thumbnail" id="thumbnail-label">
+        <span class="material-icons"> add_photo_alternate </span>
+        Choose Thumbnail</label
+      >
+      <span class="ml-8 text-sm" id="fileInfo"><%= data.image_address %></span>
+    </div>
+
+    <div class="my-5">
+      <h2 class="text-lg font-monts font-semibold underline ml-4">
+        Choose the categories for your post?
+      </h2>
+      <label class="tag__label" for="science">Science</label>
+      <input type="checkbox" name="science" id="science" />
+
+      <label class="tag__label" for="technology">Technology</label>
+      <input type="checkbox" name="technology" id="technology" />
+
+      <label class="tag__label" for="phylosophy">Phylosophy</label>
+      <input type="checkbox" name="phylosophy" id="phylosophy" />
+
+      <label class="tag__label" for="music">Music</label>
+      <input type="checkbox" name="music" id="music" />
+
+      <label class="tag__label" for="arts">Arts</label>
+      <input type="checkbox" name="arts" id="arts" />
+
+      <label class="tag__label" for="engineering">Engineering</label>
+      <input type="checkbox" name="engineering" id="engineering" />
+
+      <label class="tag__label" for="nature">Nature</label>
+      <input type="checkbox" name="nature" id="nature" />
+
+      <label class="tag__label" for="software">Software</label>
+      <input type="checkbox" name="software" id="software" />
+
+      <label class="tag__label" for="education">Education</label>
+      <input type="checkbox" name="education" id="education" />
+
+      <label class="tag__label" for="food">Food</label>
+      <input type="checkbox" name="food" id="food" />
+
+      <label class="tag__label" for="entertainment">Entertainment</label>
+      <input type="checkbox" name="entertainment" id="entertainment" />
+
+      <label class="tag__label" for="health">Health</label>
+      <input type="checkbox" name="health" id="health" />
+
+      <label class="tag__label" for="sport">Sport</label>
+      <input type="checkbox" name="sport" id="sport" />
+
+      <label class="tag__label" for="fashion">Fashion</label>
+      <input type="checkbox" name="fashion" id="fashion" />
+
+      <label class="tag__label" for="finance">Finance</label>
+      <input type="checkbox" name="finance" id="finance" />
+
+      <label class="tag__label" for="history">History</label>
+      <input type="checkbox" name="history" id="history" />
+
+      <label class="tag__label" for="comics">Comics</label>
+      <input type="checkbox" name="comics" id="comics" />
+
+      <label class="tag__label" for="astronomy">Astronomy</label>
+      <input type="checkbox" name="astronomy" id="astronomy" />
+
+      <label class="tag__label" for="nutrition">Nutrition</label>
+      <input type="checkbox" name="nutrition" id="nutrition" />
+
+      <label class="tag__label" for="comedy">Comedy</label>
+      <input type="checkbox" name="comedy" id="comedy" />
+    </div>
+
+    <input type="submit" value="Submit" class="btn" />
+  </form>
+</div>

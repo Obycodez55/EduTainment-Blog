@@ -1,43 +1,48 @@
-<div>
-  <h2>Posts</h2>
-  <a href="/admin/add-post"> + Add New</a>
+<div  class="text-center py-4">
+  <h1 class="font-bold text-3xl font-merri">Dear <%= adminFname %>, Welcome to your dashboard</h1>
 </div>
 
-<table class="p-10">
-  <thead>
-    <th>Title</th>
-    <th>Date - Modified</th>
-    <th>Creator</th>
-  </thead>
-  <% data.forEach(post => { %>
+<div class="text-center py-4">
+  <h2 class="font-bold text-5xl font-merri">Posts</h2>
+</div>
 
-  <tr>
-    <td>
-      <a href="/post/<%= post._id %>" class="font-semibold">
-        <%= post.title %></a
-      >
-    </td>
-    <td>
-      <span class="italic"
-        ><%= post.updatedAt.toLocaleDateString('en-us', { weekday:"long",
-        year:"numeric", month:"short", day:"numeric"}) %></span
-      >
-    </td>
-    <td>
+<div>
+  <div class="grid grid-cols-4 text-2xl font-semibold max-md:hidden px-2">
+    <div class="col-span-2">Title</div>
+
+    <div>Creator</div>
+    <div>Date - Modified</div>
+  </div>
+  <ul class="dashboard__post-container">
+    <% data.forEach(post => { %>
+
+    <li>
+      <div class="title">
+        <a href="/post/<%= post._id %>" class="text-2xl">
+          <%= post.title %></a
+        >
+      </div>
+      <div class="md:col-span-1 col-span-4">
+        <% if (post.createdBy === adminName) { %>
+        <span>You</span>
+        <% } else { %>
+        <span class="first-letter:uppercase"><%= post.createdBy %></span>
+        <% } %>
+      </div>
+
+      <div class="md:col-span-1 col-span-4">
+        <span class="text-lg font-light"><%= post.updatedAt.toDateString() %></span>
+      </div>
       <% if (post.createdBy === adminName) { %>
-      <span>You</span>
-      <% } else { %>
-      <span><%= post.createdBy %></span>
+      <div class="flex flex-row gap-3">
+        <a href="/admin/edit-post/<%= post._id %>" class="dashboard__btn"><span>Edit</span></a>
+
+        <a href="/admin/delete-post/<%= post._id %>" class="dashboard__btn"><span>Delete</span></a>
+      </div>
       <% } %>
-    </td>
-    <% if (post.createdBy === adminName) { %>
-    <td>
-      <span> <a href="/admin/edit-post/<%= post._id %>">Edit</a> </span>
+    </li>
 
-      <span> <a href="/admin/delete-post/<%= post._id %>"> Delete </a></span>
-    </td>
-    <% } %>
-  </tr>
-
-  <% }) %>
-</table>
+    <% }) %>
+  </ul>
+</div>
+<a href="/admin/add-post"> + Add New</a>

@@ -4,14 +4,14 @@ const router = express.Router();
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, './public/img/Post_Thumbnails');
+    cb(null, "./public/img/Post_Thumbnails");
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + "--" + file.originalname);
   }
 });
 
-const upload = multer({storage})
+const upload = multer({ storage });
 
 const Post = require("../models/Post");
 const Admin = require("../models/Admin");
@@ -32,21 +32,18 @@ router.get("/", (req, res) => {
   res.redirect("/admin/login");
 });
 
-
 /**
  * GET /
  * Admin -- Login
  */
 
-router.get("/login",adminAuthMiddleware , async (req, res) => {
+router.get("/login", adminAuthMiddleware, async (req, res) => {
   try {
-    res.redirect('/admin/dashboard');
+    res.redirect("/admin/dashboard");
   } catch (error) {
     console.log(error);
   }
 });
-
-
 
 /**
  * GET /
@@ -59,14 +56,15 @@ router.get("/register", (req, res) => {
       description: "Create an account as a creator -- CurioCraze"
     };
 
-    res.render("auth/admin_register", { locals, layout: authLayout, error: false });
+    res.render("auth/admin_register", {
+      locals,
+      layout: authLayout,
+      error: false
+    });
   } catch (error) {
     console.log(error);
   }
 });
-
-
-
 
 /**
  * GET /
@@ -81,12 +79,18 @@ router.get("/dashboard", ensureAdminAuth, async (req, res) => {
     };
     const creator = await Admin.findById({ _id: req.adminId });
     const data = await Post.find();
-    res.render("admin/dashboard", { locals, data, currentRoute: "/admin/dashboard", adminName:creator.username, layout: adminLayout });
+    res.render("admin/dashboard", {
+      locals,
+      data,
+      currentRoute: "/admin/dashboard",
+      adminFname: creator.firstname,
+      adminName: creator.username,
+      layout: adminLayout
+    });
   } catch (error) {
     console.log(error);
   }
 });
-
 
 /**
  * GET /
@@ -100,11 +104,15 @@ router.get("/creators", ensureAdminAuth, async (req, res) => {
       description: "Check up on fellow Creators and their work"
     };
     const data = await Admin.find();
-    res.render("admin/creators", { locals, data, currentRoute: "/admin/creators", layout: adminLayout });
+    res.render("admin/creators", {
+      locals,
+      data,
+      currentRoute: "/admin/creators",
+      layout: adminLayout
+    });
   } catch (error) {
     console.log(error);
   }
-
 });
 
 /**
@@ -119,27 +127,35 @@ router.get("/users", ensureAdminAuth, async (req, res) => {
       description: "View and Manage Users"
     };
     const data = await User.find();
-    res.render("admin/users", { locals, data, currentRoute: "/admin/users", layout: adminLayout });
+    res.render("admin/users", {
+      locals,
+      data,
+      currentRoute: "/admin/users",
+      layout: adminLayout
+    });
   } catch (error) {
     console.log(error);
   }
-
 });
-
 
 /**
  * GET /
  * Admin -- Create new post
  */
-router.get("/add-post", ensureAdminAuth,  async (req, res) => {
+router.get("/add-post", ensureAdminAuth, async (req, res) => {
   try {
     const locals = {
       title: "Admin || Create!",
-      description: "Simple Blog created with NodeJs, Express & MongoDb."
+      description: "Post Creation Site for Creators"
     };
 
     const data = await Post.find();
-    res.render("admin/add-post", { locals, data, currentRoute: "/admin/add-post", layout: adminLayout });
+    res.render("admin/add-post", {
+      locals,
+      data,
+      currentRoute: "/admin/add-post",
+      layout: adminLayout
+    });
   } catch (error) {
     console.log(error);
   }
@@ -150,32 +166,34 @@ router.get("/add-post", ensureAdminAuth,  async (req, res) => {
  * Admin -- Create new post
  */
 
-router.post('/add-post', ensureAdminAuth, upload.single('thumbnail'), async (req, res) => {
-  try {
-    const creator = await Admin.findById({_id: req.adminId})
+router.post(
+  "/add-post",
+  ensureAdminAuth,
+  upload.single("thumbnail"),
+  async (req, res) => {
     try {
-      const newPost = new Post({
-        title: req.body.title,
-        description: req.body.description,
-        image_address: req.file.filename,
-        body: req.body.body,
-        tags: getTags(req.body),
-        createdBy: creator.username
-      });
-   
+      const creator = await Admin.findById({ _id: req.adminId });
+      try {
+        const newPost = new Post({
+          title: req.body.title,
+          description: req.body.description,
+          image_address: req.file.filename,
+          body: req.body.body,
+          tags: getTags(req.body),
+          createdBy: creator.username
+        });
 
-      await Post.create(newPost);
+        await Post.create(newPost);
 
-      res.redirect('/admin/dashboard');
+        res.redirect("/admin/dashboard");
+      } catch (error) {
+        console.log(error);
+      }
     } catch (error) {
       console.log(error);
-
     }
-
-  } catch (error) {
-    console.log(error);
   }
-});
+);
 
 /**
  * GET /
@@ -188,11 +206,16 @@ router.get("/edit-post/:id", ensureAdminAuth, async (req, res) => {
     const data = await Post.findById({ _id: slug });
 
     const locals = {
-      title: "Admin Edit || "+ data.title,
-      description: "Simple Blog made with NodeJs, Express, EJS and MongoDB"
+      title: "Admin || Edit!",
+      description: "Creator site for editing and updating posts"
     };
 
-    res.render("admin/edit-post", { locals, data, layout: adminLayout });
+    res.render("admin/edit-post", {
+      locals,
+      data,
+      layout: adminLayout,
+      currentRoute: "/edit-post"
+    });
   } catch (error) {
     console.log(error);
   }
@@ -203,23 +226,31 @@ router.get("/edit-post/:id", ensureAdminAuth, async (req, res) => {
  * Admin -- Edit post
  */
 
-router.put("/edit-post/:id", ensureAdminAuth, async (req, res) => {
-  try {
-    let slug = req.params.id;
+router.put(
+  "/edit-post/:id",
+  ensureAdminAuth,
+  upload.single("thumbnail"),
+  async (req, res) => {
+    try {
+      let slug = req.params.id;
+      postUpdate = {
+        title: req.body.title,
+        description: req.body.description,
+        body: req.body.body,
+        tags: getTags(req.body),
+        updatedAt: Date.now()
+      };
+      if  (req.file){
+        postUpdate.image_address = req.file.filename;
+      };
+      await Post.findByIdAndUpdate(slug, postUpdate);
 
-    await Post.findByIdAndUpdate(slug, {
-      title: req.body.title,
-      body: req.body.body,
-      updatedAt: Date.now()
-    });
-
-  res.redirect(`admin/edit-post/${req.params.id}`);
-
-  } catch (error) {
-    console.log(error);
+      res.redirect(`admin/edit-post/${req.params.id}`);
+    } catch (error) {
+      console.log(error);
+    }
   }
-});
-
+);
 
 /**
  * DELETE /
@@ -232,13 +263,11 @@ router.get("/delete-post/:id", ensureAdminAuth, async (req, res) => {
 
     await Post.findByIdAndDelete(slug);
 
-  res.redirect("admin/dashboard");
-
+    res.redirect("admin/dashboard");
   } catch (error) {
     console.log(error);
   }
 });
-
 
 /**
  * GET  /
@@ -249,7 +278,6 @@ router.get("/logout", (req, res) => {
   res.clearCookie("admin_token");
   res.redirect("/");
 });
-
 
 module.exports = router;
 

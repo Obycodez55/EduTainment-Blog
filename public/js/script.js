@@ -30,11 +30,14 @@ $(document).ready(function () {
         const titleLength = ($("#description").val()).length;
         $("#desc-count").text(titleLength);
     });
-    $("#body").on("input", function () {
-        const titleLength = ($("#body").val()).trim().split(/\s+/).length;
-        $("#body-count").text(titleLength);
-    });
 
+     $("#thumbnail").change(function (e) { 
+        e.preventDefault();
+        var file = this.files[0];
+        var filename = file.name;
+        $("#fileInfo").text(filename);
+        $("#fileInfo").removeClass("text-danger-500");
+     });
     // Auto-Resize textarea for content input
     $("textarea").keyup( e => {
         $("textarea").height("auto");
