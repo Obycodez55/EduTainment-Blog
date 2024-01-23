@@ -22,13 +22,15 @@ $(document).ready(function () {
     });
    
     // Add Post Word count
+    $("#title-count").text(($("#title").val()).length);
+    $("#desc-count").text(($("#description").val()).length)
     $("#title").on("input", function () {
         const titleLength = ($("#title").val()).length;
         $("#title-count").text(titleLength);
     });
     $("#description").on("input", function () {
-        const titleLength = ($("#description").val()).length;
-        $("#desc-count").text(titleLength);
+        const descLength = ($("#description").val()).length;
+        $("#desc-count").text(descLength);
     });
 
      $("#thumbnail").change(function (e) { 
@@ -39,13 +41,13 @@ $(document).ready(function () {
         $("#fileInfo").removeClass("text-danger-500");
      });
     // Auto-Resize textarea for content input
-    $("textarea").keyup( e => {
-        $("textarea").height("auto");
-        let scHeight = e.target.scrollHeight;
-        let height = $("textarea").height();
-        console.log(height); 
-        $("textarea").height(`${scHeight}px`);
-    });
+    // $("textarea").keyup( e => {
+    //     $("textarea").height("auto");
+    //     let scHeight = e.target.scrollHeight;
+    //     let height = $("textarea").height();
+    //     console.log(height); 
+    //     $("textarea").height(`${scHeight}px`);
+    // });
 
     // Clickable checkbox labels
     $(".tag__label").click(function (e) {

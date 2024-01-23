@@ -1,0 +1,34 @@
+<!-- Place the first <script> tag in your HTML's <head> -->
+    <script
+    src="https://cdn.tiny.cloud/1/y2d0wmv6qroinlod74ns13eh40dwvbje5eqcvaai6igvo50g/tinymce/6/tinymce.min.js"
+    referrerpolicy="origin"
+  ></script>
+  
+  <!-- Place the following <script> and <textarea> tags your HTML's <body> -->
+  
+  <script>
+    tinymce.init({
+      selector: "textarea#body",
+      plugins:
+        "ai tinycomments mentions powerpaste footnotes typography a11ychecker autocorrect advtemplate casechange searchreplace autolink mergetags directionality advcode visualblocks visualchars image link media mediaembed codesample table charmap pagebreak nonbreaking anchor tableofcontents insertdatetime advlist lists checklist wordcount tinymcespellchecker editimage help formatpainter permanentpen charmap linkchecker emoticons advtable export autosave pageembed",
+      toolbar:
+        "undo redo formatpainter | blocks fontfamily fontsize | bold italic underline strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify lineheight | link image media table mergetags |checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+      font_size_formats: "8pt 10pt 12pt 14pt 16pt 18pt 24pt 36pt 48pt 64pt",
+      //Font Text Area Style
+      font_css:
+        '@import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap");',
+      font_family_formats:
+        "Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Open Sans=open sans,sans-serif; Roboto=roboto,regular,sans-serif;",
+      height: "700px",
+      tinycomments_mode: "embedded",
+      tinycomments_author: "Author name",
+      mergetags_list: [
+        { value: "First.Name", title: "First Name" },
+        { value: "Email", title: "Email" }
+      ],
+      ai_request: (request, respondWith) =>
+        respondWith.string(() =>
+          Promise.reject("See docs to implement AI Assistant")
+        )
+    });
+  </script>

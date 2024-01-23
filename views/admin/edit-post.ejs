@@ -1,38 +1,13 @@
 <div class="text-3xl font-semibold text-center pt-10">
-  <h2>Edit: <%= data.title %></h2>
+  <h2><%= data.title %></h2>
 </div>
 
-<div>
-  <h2>View / Edit Post</h2>
+<div class="md:ml-10 ml-4 mb-6">
+  <h2 class="text-2xl font-semibold">Edit Post</h2>
 
-  <span> <a href="/admin/delete-post/<%= data._id %>"> Delete </a></span>
+  <span> <a href="/admin/delete-post/<%= data._id %>" class="dashboard__btn"> Delete Post </a></span>
 </div>
-<!-- Place the first <script> tag in your HTML's <head> -->
-<script
-  src="https://cdn.tiny.cloud/1/y2d0wmv6qroinlod74ns13eh40dwvbje5eqcvaai6igvo50g/tinymce/6/tinymce.min.js"
-  referrerpolicy="origin"
-></script>
-
-<!-- Place the following <script> and <textarea> tags your HTML's <body> -->
-<script>
-  tinymce.init({
-    selector: "textarea#body",
-    plugins:
-      "ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
-    toolbar:
-      "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
-    tinycomments_mode: "embedded",
-    tinycomments_author: "Author name",
-    mergetags_list: [
-      { value: "First.Name", title: "First Name" },
-      { value: "Email", title: "Email" }
-    ],
-    ai_request: (request, respondWith) =>
-      respondWith.string(() =>
-        Promise.reject("See docs to implement AI Assistant")
-      )
-  });
-</script>
+<%- include('../partials/text-editor.ejs') %>
 <div class="md:p-10 p-1">
   <form
     action="/admin/edit-post/<%= data._id %>?_method=PUT"
@@ -77,7 +52,7 @@
         <span class="material-icons"> add_photo_alternate </span>
         Choose Thumbnail</label
       >
-      <span class="ml-8 text-sm" id="fileInfo"><%= data.image_address %></span>
+      <span class="ml-4 text-sm" id="fileInfo"><%= data.image_address %></span>
     </div>
 
     <div class="my-5">

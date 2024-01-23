@@ -1,33 +1,8 @@
 <div class="text-3xl font-semibold text-center pt-10">
   <h2>Add New Post</h2>
 </div>
+<%- include('../partials/text-editor.ejs') %>
 
-<!-- Place the first <script> tag in your HTML's <head> -->
-<script
-  src="https://cdn.tiny.cloud/1/y2d0wmv6qroinlod74ns13eh40dwvbje5eqcvaai6igvo50g/tinymce/6/tinymce.min.js"
-  referrerpolicy="origin"
-></script>
-
-<!-- Place the following <script> and <textarea> tags your HTML's <body> -->
-<script>
-  tinymce.init({
-    selector: "textarea#body",
-    plugins:
-      "ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss",
-    toolbar:
-      "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
-    tinycomments_mode: "embedded",
-    tinycomments_author: "Author name",
-    mergetags_list: [
-      { value: "First.Name", title: "First Name" },
-      { value: "Email", title: "Email" }
-    ],
-    ai_request: (request, respondWith) =>
-      respondWith.string(() =>
-        Promise.reject("See docs to implement AI Assistant")
-      )
-  });
-</script>
 <div class="md:p-10 p-1">
   <form
     action="/admin/add-post"
@@ -65,7 +40,7 @@
         <span class="material-icons"> add_photo_alternate </span>
         Choose Thumbnail</label
       >
-      <span class="ml-8 text-danger-500 text-sm" id="fileInfo">required</span>
+      <span class="ml-4 text-danger-500 text-sm" id="fileInfo">required</span>
     </div>
 
     <div class="my-5">

@@ -1,0 +1,44 @@
+<div class="text-center py-4">
+  <h1 class="font-bold text-3xl font-merri">Manage all Users on CurioCraze</h1>
+</div>
+
+<div class="text-center py-4">
+  <h2 class="font-bold text-5xl font-merri">Users</h2>
+</div>
+
+<div>
+  <div class="grid grid-cols-4 text-2xl font-semibold max-md:hidden px-2">
+    <div class="col-span-2">Creator</div>
+
+    <div>Joined</div>
+    <div>Last Login</div>
+  </div>
+  <ul class="dashboard__post-container">
+    <% data.forEach(user => { %>
+
+    <li class="">
+      <div class="title">
+        <span class="text-2xl">
+          <%= user.firstname + " " + user.lastname %></span
+        >
+      </div>
+      <div class="md:col-span-1 col-span-4">
+        <span class="md:hidden">Last Login: </span>
+        <span><%= user.lastLogin.toDateString() %></span>
+      </div>
+      <div class="md:col-span-1 col-span-4">
+        <span class="md:hidden">Joined At: </span>
+        <span class="text-lg font-light"
+          ><%= user.joinedAt.toDateString() %></span
+        >
+      </div>
+      <div class="flex flex-row gap-3 col-span-4">
+        <a href="/admin/delete-user/<%= user._id %>" class="dashboard__btn"
+          ><span>Delete User</span></a
+        >
+      </div>
+    </li>
+
+    <% }) %>
+  </ul>
+</div>

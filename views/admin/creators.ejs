@@ -1,0 +1,43 @@
+<div class="text-center py-4">
+  <h1 class="font-bold text-3xl font-merri">View all CurioCraze Creators</h1>
+</div>
+
+<div class="text-center py-4">
+  <h2 class="font-bold text-5xl font-merri">Creators</h2>
+</div>
+
+<div>
+  <div class="grid grid-cols-4 text-2xl font-semibold max-md:hidden px-2">
+    <div class="col-span-2">Creator</div>
+
+    <div>Number of Posts</div>
+    <div>Joined</div>
+  </div>
+  <ul class="dashboard__post-container">
+    <% data.forEach(creator => { %>
+
+    <li>
+      <div class="title">
+        <% if (creator._id == AdminId) { %>
+        <a href="/admin/post/<%= creator._id %>" class="text-2xl"> You</a>
+        <% }else{ %>
+        <a href="/admin/post/<%= creator._id %>" class="text-2xl">
+          <%= creator.firstname + " " + creator.lastname %></a
+        >
+        <% } %>
+      </div>
+      <div class="md:col-span-1 col-span-4">
+        <span class="md:hidden">Number of posts: </span>
+        <span><%= creator.__v %></span>
+      </div>
+      <div class="md:col-span-1 col-span-4">
+        <span class="md:hidden">Joined At: </span>
+        <span class="text-lg font-light"
+          ><%= creator.joinedAt.toDateString() %></span
+        >
+      </div>
+    </li>
+
+    <% }) %>
+  </ul>
+</div>

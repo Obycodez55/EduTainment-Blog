@@ -103,10 +103,12 @@ router.get("/creators", ensureAdminAuth, async (req, res) => {
       title: "Admin || Creators",
       description: "Check up on fellow Creators and their work"
     };
+    const AdminId = req.adminId;
     const data = await Admin.find();
     res.render("admin/creators", {
       locals,
       data,
+      AdminId,
       currentRoute: "/admin/creators",
       layout: adminLayout
     });
@@ -184,6 +186,8 @@ router.post(
         });
 
         await Post.create(newPost);
+        const no_of_Posts = creator.__v + 1;
+        await creator.updateOne({__v: no_of_Posts});
 
         res.redirect("/admin/dashboard");
       } catch (error) {
@@ -209,7 +213,7 @@ router.get("/edit-post/:id", ensureAdminAuth, async (req, res) => {
       title: "Admin || Edit!",
       description: "Creator site for editing and updating posts"
     };
-
+   
     res.render("admin/edit-post", {
       locals,
       data,
@@ -245,7 +249,7 @@ router.put(
       };
       await Post.findByIdAndUpdate(slug, postUpdate);
 
-      res.redirect(`admin/edit-post/${req.params.id}`);
+      res.redirect(`/admin/edit-post/${req.params.id}`);
     } catch (error) {
       console.log(error);
     }
@@ -263,7 +267,7 @@ router.get("/delete-post/:id", ensureAdminAuth, async (req, res) => {
 
     await Post.findByIdAndDelete(slug);
 
-    res.redirect("admin/dashboard");
+    res.redirect("/admin/dashboard");
   } catch (error) {
     console.log(error);
   }

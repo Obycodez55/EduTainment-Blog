@@ -62,7 +62,8 @@ router.post("/admin/register", async (req, res) => {
         lastname: lastname,
         email: email,
         username: username,
-        password: hashedPassword
+        password: hashedPassword,
+        no_of_Posts: 0
       };
       const admin = await Admin.create(creator);
       console.log(admin);
@@ -138,6 +139,7 @@ router.post("/user/login", async (req, res) => {
 
     const token = jwt.sign({ userId: user.id }, jwtSecret);
     res.cookie("user_token", token, { httpOnly: true });
+    await user.updateOne({lastLogin: Date.now()});
     res.redirect("/home");
   } catch (error) {
     console.log(error);
