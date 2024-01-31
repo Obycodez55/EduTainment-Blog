@@ -904,16 +904,16 @@ label{
   margin-bottom: 1.25rem;
 }
 
+.mb-6{
+  margin-bottom: 1.5rem;
+}
+
 .ml-2{
   margin-left: 0.5rem;
 }
 
 .ml-4{
   margin-left: 1rem;
-}
-
-.ml-8{
-  margin-left: 2rem;
 }
 
 .mr-3{
@@ -928,16 +928,12 @@ label{
   margin-top: 5rem;
 }
 
+.mt-3{
+  margin-top: 0.75rem;
+}
+
 .mt-8{
   margin-top: 2rem;
-}
-
-.mb-6{
-  margin-bottom: 1.5rem;
-}
-
-.ml-10{
-  margin-left: 2.5rem;
 }
 
 .flex{
@@ -1130,10 +1126,6 @@ label{
 
 .pt-5{
   padding-top: 1.25rem;
-}
-
-.pl-4{
-  padding-left: 1rem;
 }
 
 .text-center{
@@ -1979,16 +1971,16 @@ body{
     margin: 2.5rem;
   }
 
+  .md\:ml-10{
+    margin-left: 2.5rem;
+  }
+
   .md\:ml-4{
     margin-left: 1rem;
   }
 
   .md\:mt-5{
     margin-top: 1.25rem;
-  }
-
-  .md\:ml-10{
-    margin-left: 2.5rem;
   }
 
   .md\:hidden{

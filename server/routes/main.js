@@ -82,7 +82,6 @@ router.get("/post/:id", ensureUserAuth,  async (req, res) => {
     let slug = req.params.id;
 
     const data = await Post.findById({ _id: slug });
-    console.log(data);
     const locals = {
       title: data.title,
       description: "Simple Blog made with NodeJs, Express, EJS and MongoDB"
@@ -102,21 +101,22 @@ router.get("/post/:id", ensureUserAuth,  async (req, res) => {
 
 router.get("/search/:searchTerm", ensureUserAuth, async (req, res) => {
   try {
-    const locals = {
-      title: "NodeJs Blog",
-      description: "Simple Blog made with NodeJs, Express, EJS and MongoDB"
-    };
+    
 
     let searchTerm = req.params.searchTerm;
     const searchNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
-
+    const locals = {
+      title: `${searchTerm} - search results`,
+      description: "Search for your terms and categories"
+    };
     const data = await Post.find({
       $or: [
         {tags: {$regex: new RegExp(searchNoSpecialChar, "i")}},
         { title: {$regex: new RegExp(searchNoSpecialChar, "i")}},
         { body: {$regex: new RegExp(searchNoSpecialChar, "i")}},
         {description: {$regex: new RegExp(searchNoSpecialChar, "i")}},
-        {image: {$regex: new RegExp(searchNoSpecialChar, "i")}}
+        {image: {$regex: new RegExp(searchNoSpecialChar, "i")}},
+        {createdBy: {$regex: new RegExp(searchNoSpecialChar, "i")}}
       ]
     });
     res.render("search", {data, locals, searchTerm ,currentRoute: `/post/${searchTerm}` });
