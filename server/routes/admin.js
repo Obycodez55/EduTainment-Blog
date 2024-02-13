@@ -11,9 +11,9 @@ cloudinary.config({
 
 const multer = require("multer");
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./public/img/Post_Thumbnails");
-  },
+  // destination: (req, file, cb) => {
+  //   cb(null, "./public/img/Post_Thumbnails");
+  // },
   filename: (req, file, cb) => {
     cb(null, Date.now() + "--" + file.originalname);
   }
@@ -184,10 +184,11 @@ router.post(
     try {
       const creator = await Admin.findById({ _id: req.adminId });
       try {
+        const result = await cloudinary.uploader.upload(req.file.path);
         const newPost = new Post({
           title: req.body.title,
           description: req.body.description,
-          image_address: req.file.filename,
+          image_address: result.url,
           body: req.body.body,
           tags: getTags(req.body),
           createdBy: creator.username
@@ -253,7 +254,8 @@ router.put(
         updatedAt: Date.now()
       };
       if  (req.file){
-        postUpdate.image_address = req.file.filename;
+        const result = await cloudinary.uploader.upload(req.file.path);
+        postUpdate.image_address = result.url;
       };
       await Post.findByIdAndUpdate(slug, postUpdate);
 

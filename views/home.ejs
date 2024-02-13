@@ -24,8 +24,8 @@
     <% post.forEach(post => { %>
      <li class="post">
       <a href="/post/<%= post._id %>">
-        <div class="relative">
-          <img src="img/Post_Thumbnails/<%= post.image_address %>" alt="<%= post.image_address %>" class="post_image"/>
+        <div class="relative bg-secondary-600">
+          <img src="<%= post.image_address %>" alt="<%= post.image_address %>" class="post_image"/>
           <div class="post_description_container">
             <div class="post_description">
               <%= post.description %>
